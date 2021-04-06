@@ -1,3 +1,4 @@
+import 'package:fire_chat_v2/app/modules/auth/auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class AuthView extends GetView<AuthController> {
           'AuthView is working',
           style: TextStyle(fontSize: 20),
         ),
-      ),
+      )
     );
   }
 }

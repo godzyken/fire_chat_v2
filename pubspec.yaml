@@ -18,13 +18,20 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+  get_storage: 2.0.2
+  firebase_core: ^1.0.3
+  flutter_login_facebook: 1.0.1
+  flutter_facebook_auth: 3.3.2
+  firebase_auth: ^1.0.2
+  google_sign_in: 5.0.1
+  cloud_firestore: ^1.0.4
   jaguar_jwt: 3.0.0
   get_server: 1.0.0
   camera: 0.8.1
-  get: 4.1.1
+  get: ^4.1.3
   flutter:
     sdk: flutter
 
