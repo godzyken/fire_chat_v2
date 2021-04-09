@@ -21,33 +21,27 @@ class LanguageController extends GetxController {
 
   // Retrieves and Sets language based on device settings
   setInitialLocalLanguage() {
-    if ((currentLanguageStore.value == '') ||
-        (currentLanguageStore.value == null)) {
-      String? _deviceLanguage = ui.window.locale.toString();
-      _deviceLanguage =
-          _deviceLanguage.substring(0, 2); //only get 1st 2 characters
-      print(ui.window.locale.toString());
-      updateLanguage(_deviceLanguage);
-    }
+    String? _deviceLanguage = ui.window.locale.toString();
+    _deviceLanguage =
+        _deviceLanguage.substring(0, 2); //only get 1st 2 characters
+    print(ui.window.locale.toString());
+    updateLanguage(_deviceLanguage);
   }
 
 // Gets current language stored
-  RxString get currentLanguageStore {
+  RxString? get currentLanguageStore {
     language.value = store.read('language');
     return language;
   }
 
   // gets the language locale app is set to
   Locale?/*!*/ get getLocale {
-    if ((currentLanguageStore.value == '') ||
-        (currentLanguageStore.value == null)) {
-      language.value = Globals.defaultLanguage;
-      updateLanguage(Globals.defaultLanguage);
-    }
+    language.value = Globals.defaultLanguage;
+    updateLanguage(Globals.defaultLanguage);
     // gets the default language key (from the translation language system)
     Locale? _updatedLocal = AppTranslationService.locale;
 
-    //print('getLocale: ' + _updatedLocal.toString());
+    // print('getLocale: ' + _updatedLocal.toString());
     return _updatedLocal;
   }
 
@@ -55,7 +49,7 @@ class LanguageController extends GetxController {
   Future<void>? updateLanguage(String value) async {
     language.value = value;
     await store.write('language', value);
-    Get.updateLocale(getLocale!);
+    Get/*!*/.updateLocale(getLocale!);
     update();
   }
 }

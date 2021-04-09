@@ -1,6 +1,5 @@
 
 import 'package:fire_chat_v2/app/core/helpers/helpers.dart';
-import 'package:flutter/foundation.dart';
 
 class UserModelField {
   static final String updatedAt = 'updatedAt';

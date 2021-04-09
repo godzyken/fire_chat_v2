@@ -1,4 +1,5 @@
 import 'package:fire_chat_v2/app/modules/auth/auth.dart';
+import 'package:fire_chat_v2/app/ui/ui.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,7 +10,8 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(
-        builder: (controller) => controller.firestoreUser.value?.uid == null
+        init: AuthController(),
+        builder: (authController) => authController.firestoreUser.value?.uid != null
             ? Center(
                 child: CircularProgressIndicator(),
               )
@@ -17,48 +19,53 @@ class HomeView extends GetView<HomeController> {
                 appBar: AppBar(
                   title: Text('HomeView'),
                   centerTitle: true,
+                  actions: [
+                    IconButton(
+                        icon: Icon(Icons.settings),
+                        onPressed: () {
+                          Get.toNamed('/settings');
+                        }),
+                  ],
                 ),
-                body: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/bgmenu.jpg'))),
-                  height: Get.height,
-                  width: Get.width,
-                  child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: Get.height / 2.7,
-                            child: Image.asset(
-                              'assets/images/brvav.png',
-                            ),
-                          ),
-                          // CustomContainerMenu('AGENTES', () => controller.agente()),
-                          // CustomContainerMenu('ARMAS', () => controller.armas()),
-                          // CustomContainerMenu('MAPAS', () => controller.mapas()),
-                          // CustomContainerMenu('TORNEIOS', () => controller.torneios()),
-                          // CustomContainerMenu(
-                          //     'PUBLICAÇÕES', () => controller.publicacoes()),
-                          Container(
-                              margin: EdgeInsets.only(bottom: 16.0),
-                              width: 300,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.red),
-                              ),
-                              child: TextButton(
-                                onPressed: () => Get.toNamed('/auth'),
-                                child: Center(
-                                    child: Text(
-                                  'X1 - estamos trabalhando nisso',
-                                  style: TextStyle(color: Colors.grey),
-                                )),
-                              ))
+                body: Center(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 120),
+                      Avatar(authController.firestoreUser.value),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          FormVerticalSpace(),
+                          Text(
+                              'uidLabel'.tr +
+                                  ': ' +
+                                  authController.firestoreUser.value!.uid!,
+                              style: TextStyle(fontSize: 16)),
+                          FormVerticalSpace(),
+                          Text(
+                               'nameLabel'.tr +
+                                  ': ' +
+                                   authController.firestoreUser.value!.name!,
+                              style: TextStyle(fontSize: 16)),
+                          FormVerticalSpace(),
+                          Text(
+                              'emailLabel'.tr +
+                                  ': ' +
+                                  authController.firestoreUser.value!.email!,
+                              style: TextStyle(fontSize: 16)),
+                          FormVerticalSpace(),
+                          // Text(
+                          //     'adminUserLabel'.tr +
+                          //         ': ' +
+                          //         controller.admin.value.toString(),
+                          //     style: TextStyle(fontSize: 16)),
                         ],
-                      )),
-                )));
+                      ),
+                    ],
+                  ),
+                ),
+        )
+    );
   }
 }

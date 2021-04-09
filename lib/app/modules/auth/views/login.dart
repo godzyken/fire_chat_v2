@@ -9,8 +9,7 @@ class LoginSelectorUi extends StatefulWidget {
   final FacebookLogin plugin;
 
   const LoginSelectorUi({Key? key, required this.plugin})
-      : assert(plugin != null),
-        super(key: key);
+      : super(key: key);
 
   @override
   _LoginSelectorUiState createState() => _LoginSelectorUiState();

@@ -1,4 +1,3 @@
-import 'package:fire_chat_v2/app/core/helpers/helpers.dart';
 import 'package:fire_chat_v2/app/modules/auth/auth.dart';
 import 'package:fire_chat_v2/app/ui/components/components.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class ResetPasswordUI extends GetView<AuthController> {
                       labelText: 'reset Password Button'.tr,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          await controller.handlePasswordReset();
+                          await controller.signInWithEmailAndPassword(context);
                         }
                       }),
                   FormVerticalSpace(),
@@ -53,21 +52,13 @@ class ResetPasswordUI extends GetView<AuthController> {
   }
 
   appBar(BuildContext context) {
-    if ((controller.email.value.text == '') ||
-        (controller.email.value.text == null)) {
-      return null;
-    }
     return AppBar(title: Text('Reset Password'));
   }
 
   signInLink(BuildContext context) {
-    if ((controller.email.value.text == '') ||
-        (controller.email.value.text == null)) {
-      return LabelButton(
-        labelText: 'Send New Password'.tr,
-        onPressed: () => Get.to(() => SignInUI()),
-      );
-    }
-    return Container(width: 0, height: 0);
+    return LabelButton(
+      labelText: 'Send New Password'.tr,
+      onPressed: () => Get.to(() => SignInUI()),
+    );
   }
 }

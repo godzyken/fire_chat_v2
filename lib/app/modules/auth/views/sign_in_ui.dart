@@ -1,5 +1,5 @@
 
-import 'package:fire_chat_v2/app/core/helpers/helpers.dart';
+import 'package:fire_chat_v2/app/modules/auth/auth.dart';
 import 'package:fire_chat_v2/app/modules/auth/controllers/auth_controller.dart';
 import 'package:fire_chat_v2/app/modules/auth/views/login.dart';
 import 'package:fire_chat_v2/app/ui/components/components.dart';
@@ -56,10 +56,10 @@ class SignInUI extends GetView<AuthController> {
                 ),
                 FormVerticalSpace(),
                 PrimaryButton(
-                    // labelText: labels?.auth?.signInButton,
+                    labelText: 'signIn'.tr,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        controller.handleSignIn(SignInType.STANDARD);
+                        controller.signInWithEmailAndPassword(context);
                       }
                     }),
                 FormVerticalSpace(),
@@ -70,17 +70,17 @@ class SignInUI extends GetView<AuthController> {
                   alignment: WrapAlignment.center,
                   children: [
                     GoogleSignInButton(
-                      // labelText: labels?.auth?.googleSignInButton,
+                      labelText: 'googleSignInButton'.tr,
                       onPressed: () async {
                         SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        controller.handleSignIn(SignInType.GOOGLE);
+                        controller.googleSignIn(context);
                       },
                     ),
                     FacebookSignInButton(
-                      // labelText: labels?.auth?.googleSignInButton,
+                      labelText: 'googleSignInButton'.tr,
                       onPressed: () async {
                         SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        controller.handleSignIn(SignInType.FACEBOOK);
+                        controller.facebookSignIn(context);
                       },
                       onLongPressed: () =>
                           Get.offAll(() => LoginSelectorUi(plugin: plugin)),
@@ -96,14 +96,12 @@ class SignInUI extends GetView<AuthController> {
                 ),
                 FormVerticalSpace(),
                 LabelButton(
-                  // labelText: labels?.auth?.resetPasswordLabelButton,
-                  // onPressed: () => Get.to(() => ResetPasswordUI()),
-                  onPressed: () => Get.to(() => null),
+                  labelText: 'resetPassword'.tr,
+                  onPressed: () => Get.toNamed('/reset-password'),
                 ),
                 LabelButton(
-                  // labelText: labels?.auth?.signUpLabelButton,
-                  // onPressed: () => Get.offAll(() => SignUpUI()),
-                  onPressed: () => Get.offAll(() => null),
+                  labelText: 'Create'.tr,
+                  onPressed: () => Get.toNamed('/create-a-account'),
                 ),
               ],
             ),

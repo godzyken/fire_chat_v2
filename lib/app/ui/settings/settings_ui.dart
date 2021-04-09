@@ -39,7 +39,7 @@ class SettingsUI extends GetView<AuthController> {
           title: Text('signOut'.tr),
           trailing: ElevatedButton(
             onPressed: () {
-              controller.handleSignOut();
+              controller.signOut();
             },
             child: Text(
               'signOut'.tr,

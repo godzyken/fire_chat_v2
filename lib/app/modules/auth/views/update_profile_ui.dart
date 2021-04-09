@@ -1,6 +1,5 @@
 
 
-import 'package:fire_chat_v2/app/core/helpers/helpers.dart';
 import 'package:fire_chat_v2/app/data/model/models.dart';
 import 'package:fire_chat_v2/app/modules/auth/auth.dart';
 import 'package:fire_chat_v2/app/modules/auth/views/reset_password_ui.dart';
@@ -17,9 +16,9 @@ class UpdateProfileUI extends GetView<AuthController> {
 
     //print('user.name: ' + user?.value?.name);
     controller.name.value.text =
-        controller.user.value!.displayName!;
+        controller.firebaseUser.value!.displayName!;
     controller.email.value.text =
-        controller.user.value!.email!;
+        controller.firebaseUser.value!.email!;
     return Scaffold(
       appBar: AppBar(title: Text('Update Profile'.tr)),
       body: Form(
@@ -62,12 +61,12 @@ class UpdateProfileUI extends GetView<AuthController> {
                           SystemChannels.textInput
                               .invokeMethod('TextInput.hide');
                           UserModel _updatedUser = UserModel(
-                              uid: controller.user.value?.uid,
-                              name: controller.name.value.text,
-                              email: controller.email.value.text,
-                              photoUrl: controller.user.value?.photoURL);
+                              uid: controller.firebaseUser.value!.uid,
+                              name: controller.firebaseUser.value!.displayName,
+                              email: controller.firebaseUser.value!.email,
+                              photoUrl: controller.firebaseUser.value!.photoURL);
                           _updateUserConfirm(context, _updatedUser,
-                              controller.user.value?.email);
+                              controller.firebaseUser.value!.email);
                         }
                       }),
                   FormVerticalSpace(),

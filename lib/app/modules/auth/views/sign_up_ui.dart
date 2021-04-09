@@ -1,4 +1,3 @@
-import 'package:fire_chat_v2/app/core/helpers/helpers.dart';
 import 'package:fire_chat_v2/app/modules/auth/auth.dart';
 import 'package:fire_chat_v2/app/ui/components/components.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:get/get.dart';
 class SignUpUI extends GetView<AuthController> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final plugin = FacebookLogin(debug: true);
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +62,7 @@ class SignUpUI extends GetView<AuthController> {
                         if (_formKey.currentState!.validate()) {
                           SystemChannels.textInput.invokeMethod(
                               'TextInput.hide'); //to hide the keyboard - if any
-                          controller.handleSignIn(SignInType.STANDARD);
+                          controller.signInWithEmailAndPassword(context);
                         }
                       }),
                   FormVerticalSpace(),
@@ -78,14 +76,14 @@ class SignUpUI extends GetView<AuthController> {
                         labelText: 'Google Sign In Button'.tr,
                         onPressed: () async {
                           SystemChannels.textInput.invokeMethod('TextInput.hide');
-                          controller.handleSignIn(SignInType.GOOGLE);
+                          controller.googleSignIn(context);
                         },
                       ),
                       FacebookSignInButton(
                         labelText: 'Google Sign In Button'.tr,
                         onPressed: () async {
                           SystemChannels.textInput.invokeMethod('TextInput.hide');
-                          controller.handleSignIn(SignInType.FACEBOOK);
+                          controller.facebookSignIn(context);
                         },
                         onLongPressed: () =>
                             Get.offAll(() => LoginSelectorUi(plugin: plugin)),
@@ -102,7 +100,7 @@ class SignUpUI extends GetView<AuthController> {
                   FormVerticalSpace(),
                   LabelButton(
                     labelText: 'Sign In Button'.tr,
-                    onPressed: () => Get.to(() => SignInUI()),
+                    onPressed: () => Get.toNamed('/login'),
                   ),
                 ],
               ),
