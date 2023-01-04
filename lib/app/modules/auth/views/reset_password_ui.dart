@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordUI extends GetView<AuthController> {
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context),
+      appBar: AppBar(
+        title: Text('Reset Password'),
+      ),
       body: Form(
-        key: _formKey,
+        key: controller.signInFormKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Center(
@@ -29,36 +28,28 @@ class ResetPasswordUI extends GetView<AuthController> {
                     // validator: Validator().email,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) => null,
-                    onSaved: (value) =>
-                    controller.email.value.text = value!,
+                    onSaved: (value) => controller.email.value.text = value!,
                   ),
                   FormVerticalSpace(),
                   PrimaryButton(
                       labelText: 'reset Password Button'.tr,
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          await controller.signInWithEmailAndPassword(context);
+                        if (controller.signInFormKey.currentState!.validate()) {
+                          await controller.login(controller.email.value.text,
+                              controller.password.value.text);
                         }
                       }),
                   FormVerticalSpace(),
-                  signInLink(context),
+                  LabelButton(
+                    labelText: 'Send New Password'.tr,
+                    onPressed: () => Get.to(() => SignInUI()),
+                  ),
                 ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  appBar(BuildContext context) {
-    return AppBar(title: Text('Reset Password'));
-  }
-
-  signInLink(BuildContext context) {
-    return LabelButton(
-      labelText: 'Send New Password'.tr,
-      onPressed: () => Get.to(() => SignInUI()),
     );
   }
 }

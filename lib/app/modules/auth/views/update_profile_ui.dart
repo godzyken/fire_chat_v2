@@ -1,28 +1,16 @@
-
-
 import 'package:fire_chat_v2/app/data/model/models.dart';
 import 'package:fire_chat_v2/app/modules/auth/auth.dart';
-import 'package:fire_chat_v2/app/modules/auth/views/reset_password_ui.dart';
 import 'package:fire_chat_v2/app/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class UpdateProfileUI extends GetView<AuthController> {
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   Widget build(BuildContext context) {
-
-    //print('user.name: ' + user?.value?.name);
-    controller.name.value.text =
-        controller.firebaseUser.value!.displayName!;
-    controller.email.value.text =
-        controller.firebaseUser.value!.email!;
     return Scaffold(
       appBar: AppBar(title: Text('Update Profile'.tr)),
       body: Form(
-        key: _formKey,
+        key: controller.signInFormKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Center(
@@ -31,7 +19,7 @@ class UpdateProfileUI extends GetView<AuthController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Avatar(controller.firestoreUser.value),
+                  Avatar(controller.userModel.value),
                   SizedBox(height: 48.0),
                   FormInputFieldWithIcon(
                     controller: controller.name.value,
@@ -39,8 +27,7 @@ class UpdateProfileUI extends GetView<AuthController> {
                     labelText: 'name'.tr,
                     // validator: Validator(Validator).name,
                     onChanged: (value) => null,
-                    onSaved: (value) =>
-                    controller.name.value.text = value!,
+                    onSaved: (value) => controller.name.value.text = value!,
                   ),
                   FormVerticalSpace(),
                   FormInputFieldWithIcon(
@@ -50,23 +37,20 @@ class UpdateProfileUI extends GetView<AuthController> {
                     // validator: Validator(Validator).email,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) => null,
-                    onSaved: (value) =>
-                    controller.email.value.text = value!,
+                    onSaved: (value) => controller.email.value.text = value!,
                   ),
                   FormVerticalSpace(),
                   PrimaryButton(
                       labelText: 'Update User'.tr,
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (controller.signInFormKey.currentState!.validate()) {
                           SystemChannels.textInput
                               .invokeMethod('TextInput.hide');
-                          UserModel _updatedUser = UserModel(
-                              uid: controller.firebaseUser.value!.uid,
-                              name: controller.firebaseUser.value!.displayName,
-                              email: controller.firebaseUser.value!.email,
-                              photoUrl: controller.firebaseUser.value!.photoURL);
-                          _updateUserConfirm(context, _updatedUser,
-                              controller.firebaseUser.value!.email);
+                          controller.update();
+                          _updateUserConfirm(
+                              context,
+                              controller.userModel.value,
+                              controller.userModel.value.email);
                         }
                       }),
                   FormVerticalSpace(),

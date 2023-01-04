@@ -1,5 +1,3 @@
-
-
 import 'package:fire_chat_v2/app/data/model/models.dart';
 import 'package:fire_chat_v2/app/ui/components/components.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +11,7 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ((user?.photoUrl == '') || (user?.photoUrl == null)) {
+    if ((user?.avatarUrl == '') || (user?.avatarUrl == null)) {
       return LogoGraphicHeader();
     }
     return Hero(
@@ -24,7 +22,7 @@ class Avatar extends StatelessWidget {
           radius: 70.0,
           child: ClipOval(
             child: Image.network(
-              user!.photoUrl!,
+              user!.avatarUrl!,
               fit: BoxFit.cover,
               width: 120.0,
               height: 120.0,

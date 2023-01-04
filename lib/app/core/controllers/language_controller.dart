@@ -35,7 +35,7 @@ class LanguageController extends GetxController {
   }
 
   // gets the language locale app is set to
-  Locale?/*!*/ get getLocale {
+  Locale? get getLocale {
     language.value = Globals.defaultLanguage;
     updateLanguage(Globals.defaultLanguage);
     // gets the default language key (from the translation language system)
@@ -49,7 +49,7 @@ class LanguageController extends GetxController {
   Future<void>? updateLanguage(String value) async {
     language.value = value;
     await store.write('language', value);
-    Get/*!*/.updateLocale(getLocale!);
+    Get.updateLocale(getLocale!);
     update();
   }
 }

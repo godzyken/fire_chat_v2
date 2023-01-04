@@ -1,4 +1,3 @@
-
 import 'package:fire_chat_v2/app/core/controllers/language_controller.dart';
 import 'package:fire_chat_v2/app/data/model/models.dart';
 import 'package:fire_chat_v2/app/modules/auth/auth.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingsUI extends GetView<AuthController> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +18,6 @@ class SettingsUI extends GetView<AuthController> {
   }
 
   Widget _buildLayoutSection(BuildContext context) {
-
     return ListView(
       children: <Widget>[
         languageListTile(context),
@@ -39,7 +36,7 @@ class SettingsUI extends GetView<AuthController> {
           title: Text('signOut'.tr),
           trailing: ElevatedButton(
             onPressed: () {
-              controller.signOut();
+              controller.logOut();
             },
             child: Text(
               'signOut'.tr,
@@ -51,8 +48,7 @@ class SettingsUI extends GetView<AuthController> {
   }
 
   languageListTile(BuildContext context) {
-    return GetBuilder<
-        LanguageController>(
+    return GetBuilder<LanguageController>(
       builder: (controller) => ListTile(
         title: Text('language'.tr),
         trailing: DropdownPicker(
@@ -70,13 +66,9 @@ class SettingsUI extends GetView<AuthController> {
   themeListTile(BuildContext context) {
     final List<MenuOptionsModel> themeOptions = [
       MenuOptionsModel(
-          key: "system",
-          value: 'system'.tr,
-          icon: Icons.brightness_4),
+          key: "system", value: 'system'.tr, icon: Icons.brightness_4),
       MenuOptionsModel(
-          key: "light",
-          value: 'settings light'.tr,
-          icon: Icons.brightness_low),
+          key: "light", value: 'settings light'.tr, icon: Icons.brightness_low),
       MenuOptionsModel(
           key: "dark", value: 'settings dark'.tr, icon: Icons.brightness_3)
     ];

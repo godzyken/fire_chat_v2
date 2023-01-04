@@ -1,7 +1,5 @@
-import 'package:fire_chat_v2/app/modules/auth/auth.dart';
 import 'package:fire_chat_v2/app/ui/ui.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
@@ -9,9 +7,9 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AuthController>(
-        init: AuthController(),
-        builder: (authController) => authController.firestoreUser.value?.uid != null
+    return GetBuilder<HomeController>(
+        init: HomeController(),
+        builder: (_) => _.userModel?.isOnline == false
             ? Center(
                 child: CircularProgressIndicator(),
               )
@@ -26,33 +24,33 @@ class HomeView extends GetView<HomeController> {
                           Get.toNamed('/settings');
                         }),
                   ],
+                  automaticallyImplyLeading: true,
                 ),
                 body: Center(
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 120),
-                      Avatar(authController.firestoreUser.value),
+                      Avatar(_.userModel),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           FormVerticalSpace(),
-                          Text(
-                              'uidLabel'.tr +
-                                  ': ' +
-                                  authController.firestoreUser.value!.uid!,
+                          Text('uidLabel'.tr + ': ' + _.userModel!.id!,
                               style: TextStyle(fontSize: 16)),
                           FormVerticalSpace(),
                           Text(
-                               'nameLabel'.tr +
-                                  ': ' +
-                                   authController.firestoreUser.value!.name!,
+                              'nameLabel'.tr +
+                                  ': ' /*+
+                                   _.firestoreUser.value!.name!*/
+                              ,
                               style: TextStyle(fontSize: 16)),
                           FormVerticalSpace(),
                           Text(
                               'emailLabel'.tr +
-                                  ': ' +
-                                  authController.firestoreUser.value!.email!,
+                                  ': ' /*+
+                                  _.firestoreUser.value!.email!*/
+                              ,
                               style: TextStyle(fontSize: 16)),
                           FormVerticalSpace(),
                           // Text(
@@ -65,7 +63,6 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
                 ),
-        )
-    );
+              ));
   }
 }
