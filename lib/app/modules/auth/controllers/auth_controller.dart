@@ -6,10 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../core/controllers/language_controller.dart';
 import '../views/sign_in_ui.dart';
 
 class AuthController extends GetxController {
-  static AuthController to = Get.find();
   late Rx<User?> _user;
   FirebaseAuth auth = FirebaseAuth.instance;
   final email = TextEditingController().obs;
@@ -18,9 +18,12 @@ class AuthController extends GetxController {
   final isLogged = false.obs;
   final admin = false.obs;
   final isAlreadySignIn = false.obs;
-  final GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
+  final signInFormKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   final userModel = UserModel().obs;
+
+  final languageController = LanguageController();
 
   @override
   void onInit() {
@@ -28,6 +31,7 @@ class AuthController extends GetxController {
     userModel.stream.listen((event) {
       return update();
     });
+    _user.refresh();
   }
 
   @override
@@ -44,7 +48,7 @@ class AuthController extends GetxController {
 
     userModel
       ..update((val) {
-        val?.email = _user.value!.email;
+        val?.email = _user.value?.email;
         val?.id = _user.value!.uid;
         val?.name = _user.value!.displayName;
       })
@@ -64,6 +68,14 @@ class AuthController extends GetxController {
       Get.offAll(() => SignInUI());
     } else {
       Get.offAll(() => ChaTNelView());
+    }
+  }
+
+  validateInputs() {
+    if (signInFormKey.currentState!.validate()) {
+      signInFormKey.currentState!.save();
+    } else {
+      autovalidateMode = AutovalidateMode.always;
     }
   }
 

@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LanguageController extends GetxController {
-  static LanguageController? get to => Get.find();
   final language = "".obs;
   final store = GetStorage();
 

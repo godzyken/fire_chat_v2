@@ -1,8 +1,6 @@
-import 'package:fire_chat_v2/app/core/controllers/language_controller.dart';
 import 'package:fire_chat_v2/app/modules/auth/auth.dart';
 import 'package:fire_chat_v2/app/modules/home/bindings/home_binding.dart';
 import 'package:fire_chat_v2/app/themes/constants/app_themes.dart';
-import 'package:fire_chat_v2/app/ui/components/components.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,33 +22,17 @@ Future<void> main() async {
   // app.ws('/socket', () => srv.Text('YO goki'));
   // app.start();
 
-  runApp(FireChatApp());
-}
-
-class FireChatApp extends StatefulWidget {
-  @override
-  _FireChatAppState createState() => _FireChatAppState();
-}
-
-class _FireChatAppState extends State<FireChatApp> {
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<LanguageController>(
-      builder: (languageController) => Loading(
-        child: GetMaterialApp(
-          theme: AppThemes.lightTheme,
-          darkTheme: AppThemes.darkTheme,
-          themeMode: ThemeMode.system,
-          title: "Fire Chat v2",
-          initialRoute: AppPages.INITIAL,
-          getPages: AppPages.routes,
-          enableLog: true,
-          initialBinding: HomeBinding(),
-          locale: AppTranslationService.locale,
-          fallbackLocale: AppTranslationService.fallbackLocale,
-          translations: AppTranslationService(),
-        ),
-      ),
-    );
-  }
+  runApp(GetMaterialApp(
+    theme: AppThemes.lightTheme,
+    darkTheme: AppThemes.darkTheme,
+    themeMode: ThemeMode.system,
+    title: "Fire Chat v2",
+    initialRoute: AppPages.INITIAL,
+    getPages: AppPages.routes,
+    enableLog: true,
+    initialBinding: HomeBinding(),
+    locale: AppTranslationService.locale,
+    fallbackLocale: AppTranslationService.fallbackLocale,
+    translations: AppTranslationService(),
+  ));
 }
